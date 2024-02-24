@@ -1,0 +1,22 @@
+Relea Florin Andrei 334CA
+Tema3 - Protocolul BitTorrent
+
+Pentru a salva informatile unui client am folosit structura ClientInfo, unde
+structura BitTorrentFile retine informatile despre fiecare fisier
+
+Pentru a tine evidenta fisierelor existente trackerul retine fisierele intr-un
+hashtable (cheia = numele fisierului, valoarea de tip tracker_file, iar chunkurile
+sunt retinute si ele printr-uh hastable). El asteapta primirea tuturor mesajelor 
+initiale de la toti clienti. La primirea unui mesaj verifica daca fisierul 
+respectiv a fost deja adaugat(caz in care adauga doar clientul in swarm-ul fisierului)
+sau daca este adaugat pentru prima oara. Dupa aceea anunta toti clientii ca pot incepe
+descarcarea si primeste mesaje pana la finalizarea tuturor clientilor. In cazul in care
+primeste un update de la un client acesta contorizeaza noile schimbari si anunta clientul
+de noua stare a fisierul.
+
+In cazul clientilor, acestia trimit prima oara mesajul initial in care anunta trackerul
+despre fisierele pe care le detin. Asteapta mesajul de confirmare ca pot incepe descarcarea
+ca pe urma sa ceara trackerului informatii despre fisierul dorit. Clientul genereaza o ordine 
+random de descarcare a chunk-urilor fisierului. Acesta pastreaza pentru fiecare fisier numarul 
+de chunk-uri descarcate de la fiecare client. Cand se cere un nou chunk se incearca obtinerea 
+lui de la clientul care il detine cel mai putin folosit. 
